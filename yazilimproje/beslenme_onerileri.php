@@ -7,7 +7,8 @@ $dbname = "cilt_bakimi_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Bağlantı hatası: " . $conn->connect_error);
+    error_log("Bağlantı hatası: " . $conn->connect_error);  // Hata loglama
+    die("Bir hata oluştu, lütfen tekrar deneyin.");
 }
 
 // Oturum kontrolü
@@ -26,7 +27,8 @@ $cilt_tipi_id = $row['cilt_tipi_id'] ?? null;
 $stmt->close();
 
 if (!$cilt_tipi_id) {
-    die("Hata: Kullanıcının cilt tipi belirlenemedi.");
+    header("Location: hata_sayfasi.php");  // Hata sayfasına yönlendirme
+    exit();
 }
 
 // Cilt tipine göre beslenme önerilerini güvenli şekilde çekme
